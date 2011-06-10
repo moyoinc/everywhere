@@ -1,8 +1,17 @@
-html, body, .page, #map {
+html, body, .page, #map, #madden {
   height:100%;
   width:100%;
   margin:0;
   padding:0;
+}
+
+#madden {
+  display:none;
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
 }
 
 #controls {

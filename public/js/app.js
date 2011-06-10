@@ -1,6 +1,110 @@
 // The map as a global, for hacking.
 var m;
 
+function makeMadden() {
+    var canvasDiv = document.getElementById('madden');
+    canvas = document.createElement('canvas');
+    canvas.setAttribute('width', canvasDiv.offsetWidth);
+    canvas.setAttribute('height', canvasDiv.offsetHeight);
+    canvas.setAttribute('id', 'canvas');
+    canvasDiv.appendChild(canvas);
+    context = canvas.getContext("2d");
+
+    var bakerDiv = document.getElementById('tilebaker');
+    bakerCanvas = document.createElement('canvas');
+    bakerCanvas.setAttribute('width', 256);
+    bakerCanvas.setAttribute('height', 256);
+    bakerCanvas.setAttribute('id', 'tilebaker');
+    bakerDiv.appendChild(bakerCanvas);
+    tilebakerContext = bakerCanvas.getContext("2d");
+
+
+    // Thanks to
+    // http://www.williammalone.com/articles/create-html5-canvas-javascript-drawing-app/#demo-simple
+
+    var clickX = [];
+    var clickY = [];
+    var clickDrag = [];
+    var paint;
+
+    function addClick(x, y, dragging) {
+      clickX.push(x);
+      clickY.push(y);
+      clickDrag.push(dragging);
+    }
+
+    function redraw(){
+      canvas.width = canvas.width; // Clears the canvas
+      context.strokeStyle = "#e00034";
+      context.lineJoin = "round";
+      context.lineWidth = 10;
+      for(var i=0; i < clickX.length; i++) {
+        context.beginPath();
+        if (clickDrag[i] && i) {
+          context.moveTo(clickX[i-1], clickY[i-1]);
+         } else {
+           context.moveTo(clickX[i]-1, clickY[i]);
+         }
+         context.lineTo(clickX[i], clickY[i]);
+         context.closePath();
+         context.stroke();
+      }
+    }
+
+    $('#canvas').mousedown(function(e){
+        var mouseX = e.clientX - this.offsetLeft;
+        var mouseY = e.clientY - this.offsetTop;
+        paint = true;
+        addClick(e.pageX - this.offsetLeft, e.pageY - this.offsetTop);
+        redraw();
+    });
+
+    $('#canvas').bind('mousemove', function(e){
+        if(paint){
+            addClick(e.clientX - this.offsetLeft,
+                     e.clientY - this.offsetTop, true);
+            redraw();
+        }
+    });
+
+    $('#canvas').mouseup(function(e){
+      paint = false;
+    });
+}
+
+function printMadden() {
+    var tiles = (function(t) {
+        var o = [];
+        for (var key in t) {
+            if (key.split(',')[0] == m.getZoom()) {
+                var offset = wax.util.offset(t[key]);
+                o.push([offset.top, offset.left, key]);
+            }
+        }
+        return o;
+    })(m.tiles);
+    for (var i in tiles) {
+        var data = context.getImageData(
+            tiles[i][1], // y
+            tiles[i][0], // x
+            256, 256 // dimensions
+        );
+        tilebakerContext.putImageData(data, 0, 0);
+        $.ajax({
+            url: '/baker',
+            type: 'json',
+            method: 'post',
+            data: JSON.stringify({
+                image: bakerCanvas.toDataURL(),
+                key: tiles[i][2]
+            }),
+            success: function(data) {
+                console.log(arguments);
+            }
+        });
+    }
+}
+
 window.addEventListener('load', function() {
     // Initialize map
     var mm = com.modestmaps;
@@ -10,8 +114,7 @@ window.addEventListener('load', function() {
         baseUrl: 'http://a.tiles.mapbox.com/mapbox/',
         // Called world-light
         layerName: 'world-light'}),
-        null,
-        [
+        null, [
             new mm.TouchHandler(),
             new mm.MouseHandler
         ]
@@ -63,6 +166,19 @@ window.addEventListener('load', function() {
             type: 'tile'
         });
         $(this).text('tiling on');
+        return false;
+    });
+
+    $('#control_madden').click(function(e) {
+        e.stopPropagation();
+        $('#madden').css({ display: 'block' });
+        makeMadden();
+        return false;
+    });
+
+    $('#control_print').click(function(e) {
+        e.stopPropagation();
+        printMadden();
         return false;
     });
 

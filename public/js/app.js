@@ -14,19 +14,16 @@ window.addEventListener('load', function() {
             new mm.MouseHandler
         ]
     );
-    m.setCenterZoom(new mm.Location(0, 0), 2);
 
     // Initialize sockets
     var socket = new io.Socket();
     socket.connect();
-    socket.on('connect', function(){
-    });
+    socket.on('connect', function(){ });
     socket.on('message', function(message){
         m.setCenter(message.center);
         m.setZoom(message.zoom);
     });
-    socket.on('disconnect', function(){
-    });
+    socket.on('disconnect', function(){ });
 
     m.addCallback('panned', function(m) {
         socket.send({

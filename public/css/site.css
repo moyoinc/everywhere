@@ -4,3 +4,22 @@ html, body, .page, #map {
   margin:0;
   padding:0;
 }
+
+#controls {
+  position:absolute;
+  opacity:0.1;
+  top:10px;
+  left:10px;
+  -webkit-transition-property:opacity;
+  -webkit-transition-duration:1s;
+}
+
+#controls:hover {
+  opacity:1;
+}
+
+#controls a {
+  text-decoration:none;
+  font:20px "Helvetica Neue", "Helvetica", sans-serif;
+  display:block;
+}

@@ -20,13 +20,31 @@ window.addEventListener('load', function() {
     socket.connect();
     socket.on('connect', function(){ });
     socket.on('message', function(message){
-        m.setCenter(message.center);
-        m.setZoom(message.zoom);
+        switch(message.type) {
+            case 'center':
+                m.setCenter(message.center);
+                m.setZoom(message.zoom);
+                break;
+            case 'emperor':
+                $('#emperor').remove();
+                break;
+        }
+
     });
     socket.on('disconnect', function(){ });
 
+    $('#emperor').click(function(e) {
+        e.stopPropagation();
+        socket.send({
+            type: 'emperor'
+        });
+        $(this).text('I am emperor');
+        return false;
+    });
+
     m.addCallback('panned', function(m) {
         socket.send({
+            type: 'center',
             center: m.getCenter(),
             zoom: m.getZoom()
         });

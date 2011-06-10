@@ -33,7 +33,7 @@ function makeMadden() {
       clickDrag.push(dragging);
     }
 
-    function redraw(){
+    function redraw() {
       canvas.width = canvas.width; // Clears the canvas
       context.strokeStyle = "#e00034";
       context.lineJoin = "round";
@@ -51,24 +51,33 @@ function makeMadden() {
       }
     }
 
-    $('#canvas').mousedown(function(e){
-        var mouseX = e.clientX - this.offsetLeft;
-        var mouseY = e.clientY - this.offsetTop;
+    $('#canvas').bind('touchstart mousedown', function(e){
+        var mouseX = (e.type === 'touchstart') ?
+            e.touches[0].clientX - this.offsetLeft :
+            e.clientX - this.offsetLeft;
+        var mouseY = (e.type === 'touchstart') ?
+            e.touches[0].clientY - this.offsetTop :
+            e.clientY - this.offsetTop;
         paint = true;
-        addClick(e.pageX - this.offsetLeft, e.pageY - this.offsetTop);
+        addClick(mouseX - this.offsetLeft, mouseY - this.offsetTop);
         redraw();
     });
 
-    $('#canvas').bind('mousemove', function(e){
-        if(paint){
-            addClick(e.clientX - this.offsetLeft,
-                     e.clientY - this.offsetTop, true);
+    $('#canvas').bind('mousemove touchmove', function(e){
+        if (paint) {
+            if (e.type == 'touchmove') {
+                addClick(e.touches[0].clientX - this.offsetLeft,
+                         e.touches[0].clientY - this.offsetTop, true);
+            } else {
+                addClick(e.clientX - this.offsetLeft,
+                         e.clientY - this.offsetTop, true);
+            }
             redraw();
         }
     });
 
-    $('#canvas').mouseup(function(e){
-      paint = false;
+    $('#canvas').bind('mouseup touchend', function(e){
+        paint = false;
     });
 }
 

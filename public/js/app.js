@@ -1,8 +1,10 @@
+// The map as a global, for hacking.
+var m;
+
 window.addEventListener('load', function() {
     // Initialize map
     var mm = com.modestmaps;
-
-    var m = new mm.Map('map',
+    m = new mm.Map('map',
         new wax.mm.provider({
         // From the main MapBox server
         baseUrl: 'http://a.tiles.mapbox.com/mapbox/',
@@ -18,12 +20,24 @@ window.addEventListener('load', function() {
     // Initialize sockets
     var socket = new io.Socket();
     socket.connect();
-    socket.on('connect', function(){ });
+    socket.on('connect', function(){
+        socket.send({
+            type: 'meta',
+            dimensions: m.dimensions
+        });
+    });
     socket.on('message', function(message){
         switch(message.type) {
             case 'center':
                 m.setCenter(message.center);
                 m.setZoom(message.zoom);
+                break;
+            case 'coordinate':
+                m.coordinate = new mm.Coordinate(
+                    message.coordinate.row,
+                    message.coordinate.column,
+                    message.coordinate.zoom);
+                m.draw();
                 break;
             case 'emperor':
                 $('#emperor').remove();
@@ -33,6 +47,7 @@ window.addEventListener('load', function() {
     });
     socket.on('disconnect', function(){ });
 
+    // Page controls
     $('#emperor').click(function(e) {
         e.stopPropagation();
         socket.send({
@@ -42,10 +57,21 @@ window.addEventListener('load', function() {
         return false;
     });
 
+    $('#tile').click(function(e) {
+        e.stopPropagation();
+        socket.send({
+            type: 'tile'
+        });
+        $(this).text('tiling on');
+        return false;
+    });
+
+    // Map interaction
     m.addCallback('panned', function(m) {
         socket.send({
             type: 'center',
             center: m.getCenter(),
+            coordinate: m.coordinate,
             zoom: m.getZoom()
         });
     });

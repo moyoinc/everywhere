@@ -46,7 +46,7 @@ MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
                      npm install
             node lib/everywhere/everywhere.js
 
-                    - compatibility -
+                  - compatibility -
 
-                   webkit browsers with
-                   websockets or flash.
+                 webkit browsers with
+                 websockets or flash.

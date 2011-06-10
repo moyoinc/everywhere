@@ -1,0 +1,29 @@
+{
+  "name": "everywhere",
+  "description": "everywhere",
+  "url": "https://github.com/tmcw/everywhere",
+  "keywords": [
+    "maps"
+  ],
+  "contributors": [
+    "Tom MacWright <macwright@gmail.com>"
+  ],
+  "version": "0.0.0",
+  "licenses": [{
+    "type": "BSD"
+  }],
+  "main": "./lib/everywhere/index",
+  "engines": {
+    "node": ">=0.4.0"
+  },
+  "dependencies": {
+    "socket.io": "= 0.6.x",
+    "express": "= 2.3.x",
+    "ejs": ">= 0.0.0",
+    "underscore": "= 1.1.x"
+  },
+  "devDependencies": {
+    "expresso" : ">= 0.7.6",
+    "docco" : ">= 0.2.0"
+  }
+}

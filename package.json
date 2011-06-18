@@ -19,7 +19,6 @@
   "dependencies": {
     "socket.io": "= 0.6.x",
     "express": "= 2.3.x",
-    "modestmaps": "= 0.x.x",
     "eyes": "= 0.x.x",
     "file": "= 0.1.1",
     "ejs": ">= 0.0.0",
@@ -29,5 +28,8 @@
   "devDependencies": {
     "expresso" : ">= 0.7.6",
     "docco" : ">= 0.2.0"
+  },
+  "scripts": {
+    "start": "lib/everywhere/everywhere.js"
   }
 }

@@ -1,6 +1,7 @@
 // The map as a global, for hacking.
 var m;
 
+/*
 function makeMadden() {
     var canvasDiv = document.getElementById('madden');
     canvas = document.createElement('canvas');
@@ -61,9 +62,10 @@ function makeMadden() {
         paint = true;
         addClick(mouseX - this.offsetLeft, mouseY - this.offsetTop);
         redraw();
+        return false;
     });
 
-    $('#canvas').bind('mousemove touchmove', function(e){
+    $('#canvas').bind('mousemove touchmove', function(e) {
         if (paint) {
             if (e.type == 'touchmove') {
                 addClick(e.touches[0].clientX - this.offsetLeft,
@@ -74,6 +76,7 @@ function makeMadden() {
             }
             redraw();
         }
+        return false;
     });
 
     $('#canvas').bind('mouseup touchend', function(e){
@@ -113,6 +116,7 @@ function printMadden() {
         });
     }
 }
+*/
 
 window.addEventListener('load', function() {
     // Initialize map
@@ -159,6 +163,13 @@ window.addEventListener('load', function() {
     });
     socket.on('disconnect', function(){ });
 
+    $('#get-help').click(function(e) {
+        $('#help').show();
+    });
+    $('#close-help').click(function(e) {
+        $('#help').hide();
+    });
+
     // Page controls
     $('#emperor').click(function(e) {
         e.stopPropagation();
@@ -178,6 +189,7 @@ window.addEventListener('load', function() {
         return false;
     });
 
+    /*
     $('#control_madden').click(function(e) {
         e.stopPropagation();
         $('#madden').css({ display: 'block' });
@@ -190,6 +202,7 @@ window.addEventListener('load', function() {
         printMadden();
         return false;
     });
+    */
 
     // Map interaction
     m.addCallback('panned', function(m) {

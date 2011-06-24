@@ -1,3 +1,8 @@
+html {
+}
+body {
+  font:20px "Helvetica Neue", "Helvetica", sans-serif;
+}
 html, body, .page, #map, #madden {
   height:100%;
   width:100%;
@@ -11,7 +16,6 @@ html, body, .page, #map, #madden {
   top:0;
   left:0;
   right:0;
-  bottom:0;
 }
 
 #controls {
@@ -29,6 +33,71 @@ html, body, .page, #map, #madden {
 
 #controls a {
   text-decoration:none;
-  font:20px "Helvetica Neue", "Helvetica", sans-serif;
   display:block;
+}
+
+#session-bar {
+  opacity:0.5;
+  background-color:#fff;
+  padding:10px;
+  position:absolute;
+  bottom:0;
+  left:0;
+  right:0;
+}
+
+#session-bar a {
+  color:#410746;
+  margin-right:10px;
+  text-decoration:none;
+}
+#session-bar a#get-help {
+  color:#42109C;
+}
+
+#session-bar a:hover {
+  text-decoration:underline;
+}
+
+#session-bar:hover {
+  opacity:1;
+}
+
+#help {
+  position:absolute;
+  background:#000;
+  opacity:0.7;
+  top:0;
+  left:0;
+  bottom:0;
+  right:0;
+}
+
+#help .content {
+  font:20px/30px "Helvetica Neue", "Helvetica", sans-serif;
+  opacity:1;
+  width:500px;
+  color:#fff;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+#help .content a {
+  color:#42109C;
+  opacity:1;
+}
+
+#help .content h2 {
+  margin-top:1.5em;
+  font:40px/50px "Georgia", serif;
+}
+
+#help .content p {
+  margin-top:1em;
+}
+
+#help .content a#close-help {
+  background-color:#7BE6D0;
+  color:#000;
+  font:40px/50px "Helvetica Neue", "Helvetica", sans-serif;
 }

@@ -118,14 +118,21 @@ function printMadden() {
 }
 */
 
+var getRoom = function() {
+    return window.location.href.match(/(\w+)$/)[1];
+};
+
 window.addEventListener('load', function() {
+    $('#sessionid')
+        .text(window.location.href)
+        .attr('href', window.location.href);
+
+
     // Initialize map
     var mm = com.modestmaps;
     m = new mm.Map('map',
         new wax.mm.provider({
-        // From the main MapBox server
         baseUrl: 'http://a.tiles.mapbox.com/mapbox/',
-        // Called world-light
         layerName: 'world-light'}),
         null, [
             new mm.TouchHandler(),
@@ -139,7 +146,8 @@ window.addEventListener('load', function() {
     socket.on('connect', function(){
         socket.send({
             type: 'meta',
-            dimensions: m.dimensions
+            dimensions: m.dimensions,
+            room: getRoom()
         });
     });
     socket.on('message', function(message){
@@ -171,38 +179,36 @@ window.addEventListener('load', function() {
     });
 
     // Page controls
-    $('#emperor').click(function(e) {
-        e.stopPropagation();
-        socket.send({
-            type: 'emperor'
-        });
-        $(this).text('I am emperor');
-        return false;
-    });
+    // $('#emperor').click(function(e) {
+    //     e.stopPropagation();
+    //     socket.send({
+    //         type: 'emperor'
+    //     });
+    //     $(this).text('I am emperor');
+    //     return false;
+    // });
 
-    $('#tile').click(function(e) {
-        e.stopPropagation();
-        socket.send({
-            type: 'tile'
-        });
-        $(this).text('tiling on');
-        return false;
-    });
+    // $('#tile').click(function(e) {
+    //     e.stopPropagation();
+    //     socket.send({
+    //         type: 'tile'
+    //     });
+    //     $(this).text('tiling on');
+    //     return false;
+    // });
 
-    /*
-    $('#control_madden').click(function(e) {
-        e.stopPropagation();
-        $('#madden').css({ display: 'block' });
-        makeMadden();
-        return false;
-    });
+    // $('#control_madden').click(function(e) {
+    //     e.stopPropagation();
+    //     $('#madden').css({ display: 'block' });
+    //     makeMadden();
+    //     return false;
+    // });
 
-    $('#control_print').click(function(e) {
-        e.stopPropagation();
-        printMadden();
-        return false;
-    });
-    */
+    // $('#control_print').click(function(e) {
+    //     e.stopPropagation();
+    //     printMadden();
+    //     return false;
+    // });
 
     // Map interaction
     m.addCallback('panned', function(m) {
@@ -210,7 +216,8 @@ window.addEventListener('load', function() {
             type: 'center',
             center: m.getCenter(),
             coordinate: m.coordinate,
-            zoom: m.getZoom()
+            zoom: m.getZoom(),
+            room: getRoom()
         });
     });
 }, false);

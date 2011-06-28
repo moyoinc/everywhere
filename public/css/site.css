@@ -13,6 +13,7 @@ html, body, .page, #map, #madden {
   padding:0;
 }
 
+/*
 #madden {
   display:none;
   position:absolute;
@@ -20,6 +21,7 @@ html, body, .page, #map, #madden {
   left:0;
   right:0;
 }
+  */
 
 #controls {
   position:absolute;
@@ -56,6 +58,17 @@ html, body, .page, #map, #madden {
 }
 #session-bar a#get-help {
   color:#42109C;
+}
+
+#session-bar a#rename,
+#session-bar a#rename-save {
+  color:#fff;
+  background-color:#42109C;
+  padding:3px;
+  font-size:10px;
+  margin-bottom:4px;
+  -webkit-border-radius:5px;
+  -moz-border-radius:5px;
 }
 
 #session-bar a:hover {

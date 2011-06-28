@@ -177,6 +177,21 @@ window.addEventListener('load', function() {
     $('#close-help').click(function(e) {
         $('#help').hide();
     });
+    $('a#rename').click(function(e) {
+        $('a#sessionid').hide();
+        $('a#rename').hide();
+        $('div#rename-form').show();
+    });
+    $('a#rename-save').click(function(e) {
+        var newName = $('input#rename-input').val();
+        if (!newName.match(/^\w+$/)) {
+            alert('names need to be only letters, numbers, and _s');
+        } else {
+            var oldUrl = window.location.href.split('/');
+            oldUrl[oldUrl.length - 1] = newName;
+            window.location.href = oldUrl.join('/');
+        }
+    });
 
     // Page controls
     // $('#emperor').click(function(e) {

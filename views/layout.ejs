@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <script src='/socket.io/socket.io.js'></script>
+    <script>var socketHost = 'http://<%= domain %>:9999/'</script>
+    <script src='http://<%= domain %>:9999/socket.io/socket.io.js'></script>
     <script src='<%= base %>/js/ender.js'></script>
     <script src='<%= base %>/js/modestmaps.min.js'></script>
     <script src='<%= base %>/js/wax.mm.js'></script>

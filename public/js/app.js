@@ -141,10 +141,9 @@ window.addEventListener('load', function() {
     );
 
     // Initialize sockets
-    var socket = new io.Socket();
-    socket.connect();
+    var socket = io.connect(socketHost);
     socket.on('connect', function(){
-        socket.send({
+        socket.json.send({
             type: 'meta',
             dimensions: m.dimensions,
             room: getRoom()
@@ -227,7 +226,7 @@ window.addEventListener('load', function() {
 
     // Map interaction
     m.addCallback('panned', function(m) {
-        socket.send({
+        socket.json.send({
             type: 'center',
             center: m.getCenter(),
             coordinate: m.coordinate,

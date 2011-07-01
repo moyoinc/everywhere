@@ -62,6 +62,7 @@ html, body, .page, #map, #madden {
 
 #session-bar a#rename,
 #session-bar a#rename-save {
+  white-space: nowrap;
   color:#fff;
   background-color:#42109C;
   padding:3px;
@@ -113,7 +114,31 @@ html, body, .page, #map, #madden {
 }
 
 #help .content a#close-help {
-  background-color:#7BE6D0;
-  color:#000;
   font:40px/50px "Helvetica Neue", "Helvetica", sans-serif;
+}
+
+/* iPhone [portrait + landscape] */
+@media only screen and (max-device-width: 480px) {
+  body {
+    font:15px "Helvetica Neue", "Helvetica", sans-serif;
+  }
+
+  #help .content h2 {
+    margin-top:0.5em;
+    font:20px/30px "Georgia", serif;
+  }
+
+  #help .content {
+    font:15px/20px "Helvetica Neue", "Helvetica", sans-serif;
+    width:90%;
+  }
+
+  #help .content p {
+    margin-top:1em;
+  }
+
+  #help .content a#close-help {
+    font-weight:bold;
+    font:20px/30px "Helvetica Neue", "Helvetica", sans-serif;
+  }
 }

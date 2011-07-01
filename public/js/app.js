@@ -2,7 +2,9 @@
 var m;
 
 var getRoom = function() {
-    return window.location.href.match(/(\w+)$/)[1];
+    // Allow window.location to be briefly weird.
+    var l;
+    if (l = window.location.href.match(/(\w+)$/)) return l[1];
 };
 
 window.addEventListener('load', function() {
@@ -58,6 +60,27 @@ window.addEventListener('load', function() {
         $('a#sessionid').hide();
         $('a#rename').hide();
         $('div#rename-form').show();
+        $('input#rename-input')[0].focus();
+    });
+
+    var renameRoom = function() {
+        var newName = $('input#rename-input').val();
+        if (!newName.match(/^\w+$/)) {
+            alert('names need to be only letters, numbers, and _s');
+        } else {
+            var oldUrl = window.location.href.split('/');
+            oldUrl[oldUrl.length - 1] = newName;
+            window.location.href = oldUrl.join('/');
+        }
+    };
+
+    $('input#rename-input').keypress(function(e) {
+        if (e.keyCode === 13) return renameRoom();
+        if (!String.fromCharCode(e.keyCode).match(/[a-zA-Z0-9_]/g)) {
+            e.preventDefault();
+            console.log('no match');
+            return false;
+        }
     });
     $('a#rename-save').click(function(e) {
         var newName = $('input#rename-input').val();

@@ -41,9 +41,7 @@ window.addEventListener('load', function() {
                 break;
             case 'meta':
                 $('#room-population').text(
-                    (message.population > 1) ?
-                    message.population + ' people are in this room' :
-                    'It\'s just you in this room - give some friends the link.');
+                    message.population + ' here');
                 break;
         }
 
@@ -93,37 +91,7 @@ window.addEventListener('load', function() {
         }
     });
 
-    // Page controls
-    // $('#emperor').click(function(e) {
-    //     e.stopPropagation();
-    //     socket.send({
-    //         type: 'emperor'
-    //     });
-    //     $(this).text('I am emperor');
-    //     return false;
-    // });
 
-    // $('#tile').click(function(e) {
-    //     e.stopPropagation();
-    //     socket.send({
-    //         type: 'tile'
-    //     });
-    //     $(this).text('tiling on');
-    //     return false;
-    // });
-
-    // $('#control_madden').click(function(e) {
-    //     e.stopPropagation();
-    //     $('#madden').css({ display: 'block' });
-    //     makeMadden();
-    //     return false;
-    // });
-
-    // $('#control_print').click(function(e) {
-    //     e.stopPropagation();
-    //     printMadden();
-    //     return false;
-    // });
 
     // Map interaction
     m.addCallback('panned', function(m) {
